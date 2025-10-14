@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Green Turn Solar. All rights reserved. Website for demonstration purposes.</p>
+          <p>&copy; {new Date().getFullYear()} Green Turn Solar. All rights reserved.</p>
         </div>
       </div>
     </footer>
