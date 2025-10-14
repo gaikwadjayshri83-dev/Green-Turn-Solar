@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import CalculatorPage from './pages/CalculatorPage';
-import FaqPage from './pages/FaqPage';
-import ContactPage from './pages/ContactPage';
-import GalleryPage from './pages/GalleryPage';
-import BuildSystemPage from './pages/BuildSystemPage';
-import TestimonialsPage from './pages/TestimonialsPage';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfServices from './pages/TermsOfServices';
-import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
-import LoadingSpinner from './components/common/LoadingSpinner';
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import ServicesPage from "./pages/ServicesPage";
+import CalculatorPage from "./pages/CalculatorPage";
+import FaqPage from "./pages/FaqPage";
+import ContactPage from "./pages/ContactPage";
+import GalleryPage from "./pages/GalleryPage";
+import BuildSystemPage from "./pages/BuildSystemPage";
+import TestimonialsPage from "./pages/TestimonialsPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfServices from "./pages/TermsOfServices";
+import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import LoadingSpinner from "./components/common/LoadingSpinner";
 
 const hashRoutes: { [key: string]: React.ComponentType } = {
-  '#home': HomePage,
-  '#about': AboutPage,
-  '#services': ServicesPage,
-  '#calculator': CalculatorPage,
-  '#faq': FaqPage,
-  '#contact': ContactPage,
-  '#gallery': GalleryPage,
-  '#build': BuildSystemPage,
-  '#testimonials': TestimonialsPage,
+  "#home": HomePage,
+  "#about": AboutPage,
+  "#services": ServicesPage,
+  "#calculator": CalculatorPage,
+  "#faq": FaqPage,
+  "#contact": ContactPage,
+  "#gallery": GalleryPage,
+  "#build": BuildSystemPage,
+  "#testimonials": TestimonialsPage,
 };
 
 const App: React.FC = () => {
-  const [currentRoute, setCurrentRoute] = useState(window.location.hash || '#home');
+  const [currentRoute, setCurrentRoute] = useState(
+    window.location.hash || "#home"
+  );
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [pathRoute, setPathRoute] = useState(window.location.pathname);
 
@@ -37,7 +39,7 @@ const App: React.FC = () => {
       if (window.location.hash === currentRoute) return;
       setIsPageLoading(true);
       setTimeout(() => {
-        setCurrentRoute(window.location.hash || '#home');
+        setCurrentRoute(window.location.hash || "#home");
         window.scrollTo(0, 0);
         setIsPageLoading(false);
       }, 300);
@@ -48,26 +50,26 @@ const App: React.FC = () => {
       window.scrollTo(0, 0);
     };
 
-    // Listen for hash and path changes
-    window.addEventListener('hashchange', handleHashChange);
-    window.addEventListener('popstate', handlePathChange);
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("popstate", handlePathChange);
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-      window.removeEventListener('popstate', handlePathChange);
+      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("popstate", handlePathChange);
     };
   }, [currentRoute]);
 
-  // Check if user opened a static route (non-hash)
+  // Select page based on hash or path
   let Page: React.ComponentType;
-  if (pathRoute === '/privacy-policy') Page = PrivacyPolicy;
-  else if (pathRoute === '/terms-of-services') Page = TermsOfServices;
-  else Page = hashRoutes[currentRoute] || hashRoutes['#home'];
+  if (pathRoute === "/privacy-policy") Page = PrivacyPolicy;
+  else if (pathRoute === "/terms-of-services") Page = TermsOfServices;
+  else Page = hashRoutes[currentRoute] || hashRoutes["#home"];
 
   return (
     <LazyMotion features={domAnimation}>
       <div className="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
         <Header currentRoute={currentRoute} />
+
         <main className="flex-grow">
           <AnimatePresence mode="wait">
             {isPageLoading ? (
@@ -94,14 +96,9 @@ const App: React.FC = () => {
             )}
           </AnimatePresence>
         </main>
+
         <Footer />
       </div>
-    </LazyMotion>
-  );
-};
-
-export default App;
-
     </LazyMotion>
   );
 };
