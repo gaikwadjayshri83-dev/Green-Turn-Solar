@@ -10,10 +10,12 @@ import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfServices from './pages/TermsOfServices';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import LoadingSpinner from './components/common/LoadingSpinner';
 
-const routes: { [key: string]: React.ComponentType } = {
+const hashRoutes: { [key: string]: React.ComponentType } = {
   '#home': HomePage,
   '#about': AboutPage,
   '#services': ServicesPage,
@@ -28,54 +30,60 @@ const routes: { [key: string]: React.ComponentType } = {
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState(window.location.hash || '#home');
   const [isPageLoading, setIsPageLoading] = useState(false);
+  const [pathRoute, setPathRoute] = useState(window.location.pathname);
 
   useEffect(() => {
     const handleHashChange = () => {
-      // Don't show spinner if it's the same route
       if (window.location.hash === currentRoute) return;
-
       setIsPageLoading(true);
-
-      // Simulate a brief loading period for a smoother UX
       setTimeout(() => {
         setCurrentRoute(window.location.hash || '#home');
         window.scrollTo(0, 0);
         setIsPageLoading(false);
       }, 300);
     };
-    
-    // Set initial route without spinner
-    const initialHash = window.location.hash || '#home';
-    setCurrentRoute(initialHash);
 
+    const handlePathChange = () => {
+      setPathRoute(window.location.pathname);
+      window.scrollTo(0, 0);
+    };
+
+    // Listen for hash and path changes
     window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePathChange);
+
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handlePathChange);
     };
   }, [currentRoute]);
 
-  const Page = routes[currentRoute] || routes['#home'];
+  // Check if user opened a static route (non-hash)
+  let Page: React.ComponentType;
+  if (pathRoute === '/privacy-policy') Page = PrivacyPolicy;
+  else if (pathRoute === '/terms-of-services') Page = TermsOfServices;
+  else Page = hashRoutes[currentRoute] || hashRoutes['#home'];
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="bg-white text-gray-800 font-sans">
+      <div className="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
         <Header currentRoute={currentRoute} />
-        <main>
+        <main className="flex-grow">
           <AnimatePresence mode="wait">
             {isPageLoading ? (
-              <m.div 
+              <m.div
                 key="loader"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="h-screen" // Ensure loader takes up space
+                className="h-screen flex items-center justify-center"
               >
                 <LoadingSpinner message="Loading Page..." />
               </m.div>
             ) : (
               <m.div
-                key={currentRoute}
+                key={currentRoute + pathRoute}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -88,6 +96,12 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </div>
+    </LazyMotion>
+  );
+};
+
+export default App;
+
     </LazyMotion>
   );
 };
