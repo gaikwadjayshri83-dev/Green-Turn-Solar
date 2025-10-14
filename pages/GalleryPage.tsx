@@ -4,10 +4,10 @@ import AnimatedSection from '../components/common/AnimatedSection';
 import ImageWithSpinner from '../components/common/ImageWithSpinner';
 
 const galleryImages = [
-  { src: '/assets/gallery/1.jpg', alt: 'Rooftop solar panel installation on a residential building' },
-  { src: '/assets/gallery/2.jpg', alt: 'Solar panels installed on an industrial rooftop' },
-  { src: '/assets/gallery/3.jpg', alt: 'Detailed view of a solar panel array' },
-  { src: '/assets/gallery/4.jpg', alt: 'Green Turn Solar team inspecting a completed installation' },
+  { src: '/images/1.jpg', alt: 'Rooftop solar panel installation on a residential building' },
+  { src: '/images/2.jpg', alt: 'Solar panels installed on an industrial rooftop' },
+  { src: '/images/3.jpg', alt: 'Detailed view of a solar panel array' },
+  { src: '/images/4.jpg', alt: 'Green Turn Solar team inspecting a completed installation' },
 ];
 
 const GalleryPage: React.FC = () => {
