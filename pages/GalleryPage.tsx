@@ -7,7 +7,7 @@ const galleryImages = [
   { src: '/images/1.jpg', alt: 'Rooftop solar panel installation on a residential building' },
   { src: '/images/2.jpg', alt: 'Solar panels installed on an industrial rooftop' },
   { src: '/images/3.jpg', alt: 'Detailed view of a solar panel array' },
-  { src: '/images/4.jpg', alt: 'Green Turn Solar team inspecting a completed installation' },
+  { src: '/images/4.jpg', alt: 'Green Turn Solar team completed another installation' },
 ];
 
 const GalleryPage: React.FC = () => {
