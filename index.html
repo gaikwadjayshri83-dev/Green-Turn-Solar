@@ -1,108 +1,105 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Green Turn Solar | Rooftop Solar Installation in Nagpur</title>
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import ServicesPage from "./pages/ServicesPage";
+import CalculatorPage from "./pages/CalculatorPage";
+import FaqPage from "./pages/FaqPage";
+import ContactPage from "./pages/ContactPage";
+import GalleryPage from "./pages/GalleryPage";
+import BuildSystemPage from "./pages/BuildSystemPage";
+import TestimonialsPage from "./pages/TestimonialsPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfServices from "./pages/TermsOfServices";
+import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import LoadingSpinner from "./components/common/LoadingSpinner";
 
-  <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" href="https://greenturnsolar.com/favicon.png" />
-  <link rel="apple-touch-icon" href="https://greenturnsolar.com/favicon.png" />
-  <meta name="theme-color" content="#16a34a" />
+const hashRoutes: { [key: string]: React.ComponentType } = {
+  "#home": HomePage,
+  "#about": AboutPage,
+  "#services": ServicesPage,
+  "#calculator": CalculatorPage,
+  "#faq": FaqPage,
+  "#contact": ContactPage,
+  "#gallery": GalleryPage,
+  "#build": BuildSystemPage,
+  "#testimonials": TestimonialsPage,
+};
 
-  <!-- ✅ SEO Meta Tags -->
-  <meta name="description" content="Green Turn Solar is a leading rooftop solar installation company in Nagpur, India. We provide complete solar panel solutions — design, installation, and maintenance — for homes and businesses to save energy and costs." />
-  <meta name="keywords" content="Green Turn Solar, rooftop solar Nagpur, solar panels Nagpur, solar installation Nagpur, solar EPC Nagpur, solar company Nagpur, solar energy India, renewable energy Nagpur, residential solar, commercial solar, solar power system" />
-  <meta name="author" content="Green Turn Solar" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://greenturnsolar.com/" />
+const App: React.FC = () => {
+  const [currentRoute, setCurrentRoute] = useState(
+    window.location.hash || "#home"
+  );
+  const [isPageLoading, setIsPageLoading] = useState(false);
+  const [pathRoute, setPathRoute] = useState(window.location.pathname);
 
-  <!-- ✅ Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Green Turn Solar" />
-  <meta property="og:url" content="https://greenturnsolar.com/" />
-  <meta property="og:title" content="Green Turn Solar | Rooftop Solar Installation in Nagpur" />
-  <meta property="og:description" content="Power your home or business with clean, renewable energy. Expert rooftop solar panel installation and maintenance in Nagpur by Green Turn Solar." />
-  <meta property="og:image" content="https://greenturnsolar.com/social-preview.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === currentRoute) return;
+      setIsPageLoading(true);
 
-  <!-- ✅ Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://greenturnsolar.com/" />
-  <meta name="twitter:title" content="Green Turn Solar | Rooftop Solar Installation in Nagpur" />
-  <meta name="twitter:description" content="Clean energy for a brighter tomorrow. Green Turn Solar — Nagpur’s trusted solar partner." />
-  <meta name="twitter:image" content="https://greenturnsolar.com/social-preview.jpg" />
+      setTimeout(() => {
+        setCurrentRoute(window.location.hash || "#home");
+        window.scrollTo(0, 0);
+        setIsPageLoading(false);
+      }, 300);
+    };
 
-  <!-- ✅ Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Green Turn Solar",
-    "image": "https://greenturnsolar.com/social-preview.jpg",
-    "@id": "https://greenturnsolar.com",
-    "url": "https://greenturnsolar.com",
-    "telephone": "+91-8857935078",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "149, Vittal Nagar 1, Manewada",
-      "addressLocality": "Nagpur",
-      "addressRegion": "Maharashtra",
-      "postalCode": "440034",
-      "addressCountry": "IN"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "21.1225",
-      "longitude": "79.0806"
-    },
-    "openingHoursSpecification": [{
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-      "opens": "09:00",
-      "closes": "18:00"
-    }],
-    "sameAs": [
-      "https://www.facebook.com/greenturnsolar",
-      "https://www.instagram.com/greenturnsolar",
-      "https://www.linkedin.com/company/greenturnsolar"
-    ],
-    "description": "Green Turn Solar provides high-quality rooftop solar installation and maintenance services in Nagpur, India. We help homes and businesses reduce energy bills with clean, renewable power."
-  }
-  </script>
+    const handlePathChange = () => {
+      setPathRoute(window.location.pathname);
+      window.scrollTo(0, 0);
+    };
 
-  <!-- ✅ Fonts & Tailwind -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("popstate", handlePathChange);
 
-  <!-- ❌ Removed broken /index.css line -->
-</head>
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("popstate", handlePathChange);
+    };
+  }, [currentRoute]);
 
-<body class="font-[Inter] text-gray-800">
-  <div id="root">
-    <div class="app-loader flex items-center justify-center h-screen">
-      <div class="spinner h-16 w-16 rounded-full border-4 border-gray-200 border-t-green-600 animate-spin"></div>
-    </div>
-  </div>
+  // Determine which page to show
+  let Page: React.ComponentType;
+  if (pathRoute === "/privacy-policy") Page = PrivacyPolicy;
+  else if (pathRoute === "/terms-of-services") Page = TermsOfServices;
+  else Page = hashRoutes[currentRoute] || hashRoutes["#home"];
 
-  <script type="importmap">
-  {
-    "imports": {
-      "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-      "@google/genai": "https://aistudiocdn.com/@google/genai@^1.23.0",
-      "react/": "https://aistudiocdn.com/react@^19.2.0/",
-      "react": "https://aistudiocdn.com/react@^19.2.0",
-      "framer-motion": "https://aistudiocdn.com/framer-motion@^11.3.19",
-      "lottie-web": "https://aistudiocdn.com/lottie-web@^5.12.2"
-    }
-  }
-  </script>
+  return (
+    <LazyMotion features={domAnimation}>
+      <div className="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
+        <Header currentRoute={currentRoute} />
+        <main className="flex-grow">
+          <AnimatePresence mode="wait">
+            {isPageLoading ? (
+              <m.div
+                key="loader"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="h-screen flex items-center justify-center"
+              >
+                <LoadingSpinner message="Loading Page..." />
+              </m.div>
+            ) : (
+              <m.div
+                key={currentRoute + pathRoute}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Page />
+              </m.div>
+            )}
+          </AnimatePresence>
+        </main>
+        <Footer />
+      </div>
+    </LazyMotion>
+  );
+};
 
-  <!-- ✅ Your main React entry -->
-  <script type="module" src="./index.tsx"></script>
-</body>
-</html>
+export default App;
