@@ -36,7 +36,7 @@ const AboutUs: React.FC = () => {
           </div>
           <div className="order-1 md:order-2 rounded-lg shadow-xl overflow-hidden">
             <ImageWithSpinner
-              src="/assets/about/about.jpg"
+              src="/images/about.jpg"
               alt="Green Turn Solar technician providing excellent service"
             />
           </div>
