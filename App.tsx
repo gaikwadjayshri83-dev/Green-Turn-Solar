@@ -15,6 +15,7 @@ import TermsOfServices from "./pages/TermsOfServices";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 
+// Hash-based routes for single-page sections
 const hashRoutes: { [key: string]: React.ComponentType } = {
   "#home": HomePage,
   "#about": AboutPage,
@@ -38,6 +39,7 @@ const App: React.FC = () => {
     const handleHashChange = () => {
       if (window.location.hash === currentRoute) return;
       setIsPageLoading(true);
+
       setTimeout(() => {
         setCurrentRoute(window.location.hash || "#home");
         window.scrollTo(0, 0);
@@ -59,7 +61,7 @@ const App: React.FC = () => {
     };
   }, [currentRoute]);
 
-  // Select page based on hash or path
+  // Choose correct page (path-based or hash-based)
   let Page: React.ComponentType;
   if (pathRoute === "/privacy-policy") Page = PrivacyPolicy;
   else if (pathRoute === "/terms-of-services") Page = TermsOfServices;
