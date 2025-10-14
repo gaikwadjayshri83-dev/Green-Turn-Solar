@@ -15,7 +15,7 @@ const AboutUs: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
-            <AnimatedHeading text="Your Trusted Solar Partner in Nagpur" className="text-3xl font-bold text-gray-800 mb-4" />
+            <AnimatedHeading text="Your Trusted Solar Partner in Vidharbha" className="text-3xl font-bold text-gray-800 mb-4" />
             <p className="text-gray-600 mb-6">
               Green Turn Solar was founded with a simple mission: to make clean, renewable energy accessible and affordable for every home and business in Nagpur. We are a team of certified engineers and solar experts dedicated to providing top-quality rooftop solar solutions tailored to our local community's needs.
             </p>
