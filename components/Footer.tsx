@@ -17,9 +17,10 @@ const Footer: React.FC = () => {
             <a href="#home" className="inline-block mb-4">
               <div className="h-10 w-auto">
                 <ImageWithSpinner 
-                  src="/images/logo.svg" 
+                  src="/assets/logo/logo.svg" 
                   alt="Green Turn Solar Logo" 
-                  imageClassName="object-contain object-left" 
+                  imageClassName="object-contain object-left"
+                  containerClassName="bg-transparent"
                 />
               </div>
             </a>
@@ -68,7 +69,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Green Turn Solar. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Green Turn Solar. All rights reserved. Website for demonstration purposes.</p>
         </div>
       </div>
     </footer>
