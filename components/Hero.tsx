@@ -12,8 +12,9 @@ const Hero: React.FC = () => {
         aria-label="Rooftop solar panels on a modern house in Nagpur"
       >
         <ImageWithSpinner
-          src="/images/hero-background.jpg"
+          src="/assets/home/hero-background.jpg"
           alt="Background image of rooftop solar panels"
+          containerClassName="bg-gray-100"
         />
       </div>
 
@@ -29,7 +30,7 @@ const Hero: React.FC = () => {
       <div className="relative z-30 p-4 max-w-4xl">
         <AnimatedHeading 
           el="h1"
-          text="Power Your Future with Nagpur's best Rooftop Solar Installer"
+          text="Power Your Future with Nagpur's #1 Rooftop Solar Installer"
           className="text-4xl md:text-6xl font-extrabold mb-4"
         />
         <p className="text-lg md:text-xl mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>
