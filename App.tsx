@@ -11,7 +11,6 @@ import GalleryPage from './pages/GalleryPage';
 import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
-import LoadingSpinner from './components/common/LoadingSpinner';
 import { PAGE_SEO } from './constants';
 
 const routes: { [key: string]: React.ComponentType } = {
@@ -28,7 +27,6 @@ const routes: { [key: string]: React.ComponentType } = {
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState(window.location.hash || '#home');
-  const [isPageLoading, setIsPageLoading] = useState(false);
 
   const updateMetaTags = (route: string) => {
     const seoData = PAGE_SEO[route] || PAGE_SEO['#home']; // Fallback to home
@@ -42,21 +40,12 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const newRoute = window.location.hash || '#home';
-      // Don't show spinner if it's the same route
-      if (newRoute === currentRoute) return;
-
-      setIsPageLoading(true);
-
-      // Simulate a brief loading period for a smoother UX
-      setTimeout(() => {
-        setCurrentRoute(newRoute);
-        updateMetaTags(newRoute);
-        window.scrollTo(0, 0);
-        setIsPageLoading(false);
-      }, 300);
+      setCurrentRoute(newRoute);
+      updateMetaTags(newRoute);
+      window.scrollTo(0, 0);
     };
     
-    // Set initial route and meta tags without spinner
+    // Set initial route and meta tags
     const initialHash = window.location.hash || '#home';
     setCurrentRoute(initialHash);
     updateMetaTags(initialHash);
@@ -65,7 +54,7 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, [currentRoute]);
+  }, []); // Run only once on component mount
 
   const Page = routes[currentRoute] || routes['#home'];
 
@@ -75,28 +64,15 @@ const App: React.FC = () => {
         <Header currentRoute={currentRoute} />
         <main>
           <AnimatePresence mode="wait">
-            {isPageLoading ? (
-              <m.div 
-                key="loader"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="h-screen" // Ensure loader takes up space
-              >
-                <LoadingSpinner message="Loading Page..." />
-              </m.div>
-            ) : (
-              <m.div
-                key={currentRoute}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Page />
-              </m.div>
-            )}
+            <m.div
+              key={currentRoute}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <Page />
+            </m.div>
           </AnimatePresence>
         </main>
         <Footer />
@@ -105,4 +81,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;        
+export default App;
