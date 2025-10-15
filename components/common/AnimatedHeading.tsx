@@ -1,5 +1,6 @@
 import React from 'react';
-import { m, useInView } from 'framer-motion';
+// FIX: Import Variants type to explicitly type animation variants.
+import { m, useInView, Variants } from 'framer-motion';
 
 interface AnimatedHeadingProps {
   text: string;
@@ -12,7 +13,9 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const words = text.split(" ");
 
-  const containerVariants = {
+  // FIX: Explicitly type with `Variants` to fix type inference issues with the `ease` property,
+  // ensuring compatibility with framer-motion's 'variants' prop.
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -23,7 +26,9 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
     },
   };
 
-  const wordVariants = {
+  // FIX: Explicitly type with `Variants` to fix type inference issues where a number array was not
+  // being recognized as a valid cubic-bezier easing.
+  const wordVariants: Variants = {
     hidden: {
       opacity: 0,
       y: '100%',
