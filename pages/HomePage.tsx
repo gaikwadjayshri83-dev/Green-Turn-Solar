@@ -7,7 +7,7 @@ import AnimatedSection from '../components/common/AnimatedSection';
 import AnimatedHeading from '../components/common/AnimatedHeading';
 import Faq from '../components/Faq';
 import Contact from '../components/Contact';
-import StatsSection from '../components/StatsSection';
+import StatsSection from '../components/StatsSection.tsx';
 
 const HomePage: React.FC = () => {
   return (
