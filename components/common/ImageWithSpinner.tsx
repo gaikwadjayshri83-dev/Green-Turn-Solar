@@ -50,7 +50,7 @@ const ImageWithSpinner: React.FC<ImageWithSpinnerProps> = ({
   }, []);
 
   return (
-    <div ref={containerRef} className={`relative w-full h-full bg-gray-100 overflow-hidden ${containerClassName}`}>
+    <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${containerClassName}`}>
       {/* Only render the image tag when it's in the viewport to trigger loading */}
       {isInView && (
         <>
