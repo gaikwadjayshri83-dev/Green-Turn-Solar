@@ -12,6 +12,7 @@ import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import { PAGE_SEO } from './constants';
 
 const routes: { [key: string]: React.ComponentType } = {
   '#home': HomePage,
@@ -29,24 +30,36 @@ const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState(window.location.hash || '#home');
   const [isPageLoading, setIsPageLoading] = useState(false);
 
+  const updateMetaTags = (route: string) => {
+    const seoData = PAGE_SEO[route] || PAGE_SEO['#home']; // Fallback to home
+    document.title = seoData.title;
+    const metaDescription = document.getElementById('meta-description') as HTMLMetaElement | null;
+    if (metaDescription) {
+      metaDescription.content = seoData.description;
+    }
+  };
+
   useEffect(() => {
     const handleHashChange = () => {
+      const newRoute = window.location.hash || '#home';
       // Don't show spinner if it's the same route
-      if (window.location.hash === currentRoute) return;
+      if (newRoute === currentRoute) return;
 
       setIsPageLoading(true);
 
       // Simulate a brief loading period for a smoother UX
       setTimeout(() => {
-        setCurrentRoute(window.location.hash || '#home');
+        setCurrentRoute(newRoute);
+        updateMetaTags(newRoute);
         window.scrollTo(0, 0);
         setIsPageLoading(false);
       }, 300);
     };
     
-    // Set initial route without spinner
+    // Set initial route and meta tags without spinner
     const initialHash = window.location.hash || '#home';
     setCurrentRoute(initialHash);
+    updateMetaTags(initialHash);
 
     window.addEventListener('hashchange', handleHashChange);
     return () => {
@@ -92,4 +105,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;                                                 
+export default App;        
