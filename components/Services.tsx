@@ -5,17 +5,17 @@ import ImageWithSpinner from './common/ImageWithSpinner';
 
 const serviceData = [
   {
-    imagePath: '/assets/services/1.jpg',
+    imagePath: '/images/s1.jpg',
     title: 'Rooftop Solar Installation',
     description: 'Expert design and installation of grid-tied and off-grid solar systems for residential and commercial properties in Nagpur.',
   },
   {
-    imagePath: '/assets/services/2.jpg',
+    imagePath: '/images/s2.jpg',
     title: 'Solar Maintenance & Repair',
     description: 'Comprehensive AMC packages, panel cleaning, and troubleshooting services to ensure your system operates at peak efficiency.',
   },
   {
-    imagePath: '/assets/services/3.jpg',
+    imagePath: '/images/s3.jpg',
     title: 'Free Solar Consultation',
     description: 'Our experts provide a free site assessment, analyze your energy needs, and offer a transparent, no-obligation quote.',
   },
