@@ -43,7 +43,7 @@ const stats = [
 ];
 
 
-const StatsSection: React.FC = () => {
+export const StatsSection: React.FC = () => {
     return (
         <AnimatedSection className="py-20 bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,5 +66,3 @@ const StatsSection: React.FC = () => {
         </AnimatedSection>
     )
 }
-
-export default StatsSection;
