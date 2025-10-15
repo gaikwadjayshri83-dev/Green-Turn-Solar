@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
             <a href="#home" className="inline-block mb-4">
               <div className="h-10 w-auto">
                 <ImageWithSpinner 
-                  src="/assets/logo/logo.svg" 
+                  src="/images/logo.svg" 
                   alt="Green Turn Solar Logo" 
                   imageClassName="object-contain object-left"
                   containerClassName="bg-transparent"
