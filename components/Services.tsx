@@ -5,17 +5,17 @@ import ImageWithSpinner from './common/ImageWithSpinner';
 
 const serviceData = [
   {
-    imagePath: '/images/s1.jpg',
+    imagePath: '/assets/services/1.jpg',
     title: 'Rooftop Solar Installation',
     description: 'Expert design and installation of grid-tied and off-grid solar systems for residential and commercial properties in Nagpur.',
   },
   {
-    imagePath: '/images/s2.jpg',
+    imagePath: '/assets/services/2.jpg',
     title: 'Solar Maintenance & Repair',
     description: 'Comprehensive AMC packages, panel cleaning, and troubleshooting services to ensure your system operates at peak efficiency.',
   },
   {
-    imagePath: '/images/s3.jpg',
+    imagePath: '/assets/services/3.jpg',
     title: 'Free Solar Consultation',
     description: 'Our experts provide a free site assessment, analyze your energy needs, and offer a transparent, no-obligation quote.',
   },
@@ -35,7 +35,7 @@ const Services: React.FC = () => {
           {serviceData.map((service, index) => (
             <div key={index} className="bg-gray-50 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col overflow-hidden">
               <div className="w-full h-48">
-                 <ImageWithSpinner src={service.imagePath} alt={service.title} />
+                 <ImageWithSpinner src={service.imagePath} alt={service.title} containerClassName="bg-gray-100" />
               </div>
               <div className="p-6 flex-grow flex flex-col">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{service.title}</h3>
