@@ -21,7 +21,7 @@ const Header: React.FC<{ currentRoute: string }> = ({ currentRoute }) => {
           <a href="#home" className="flex items-center space-x-3">
             <div className="h-10 w-auto">
               <ImageWithSpinner 
-                src="/assets/logo/logo.svg" 
+                src="/images/logo.svg" 
                 alt="Green Turn Solar Logo" 
                 imageClassName="object-contain"
                 containerClassName="bg-transparent"
