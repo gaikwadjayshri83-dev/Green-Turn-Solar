@@ -7,6 +7,7 @@ import AnimatedSection from '../components/common/AnimatedSection';
 import AnimatedHeading from '../components/common/AnimatedHeading';
 import Faq from '../components/Faq';
 import Contact from '../components/Contact';
+import StatsSection from '../components/StatsSection';
 
 const HomePage: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage: React.FC = () => {
       <Hero />
       <Services />
       <AboutUs />
+      <StatsSection />
       <AnimatedSection className="text-center py-20 bg-gray-50">
         <AnimatedHeading text="See Your Potential Solar Savings" className="text-3xl font-bold text-gray-800 mb-4" />
         <p className="text-gray-600 mb-8 max-w-3xl mx-auto px-4">
