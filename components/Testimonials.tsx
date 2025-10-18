@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AnimatedSection from './common/AnimatedSection';
 import AnimatedHeading from './common/AnimatedHeading';
 
-const testimonials = [
+const initialTestimonials = [
   {
     quote: "Green Turn Solar made the entire process seamless. Our electricity bill has dropped by 90%! The team was professional and knowledgeable. Highly recommended for anyone in Nagpur.",
     name: "A. Sharma",
@@ -29,6 +29,27 @@ const DefaultAvatar: React.FC = () => (
 );
 
 const Testimonials: React.FC = () => {
+  const [testimonials, setTestimonials] = useState(initialTestimonials);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ name: '', location: '', quote: '' });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formData.name && formData.location && formData.quote) {
+      setTestimonials(prev => [formData, ...prev]);
+      setFormData({ name: '', location: '', quote: '' });
+      setShowForm(false);
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 5000); // Hide message after 5 seconds
+    }
+  };
+
   return (
     <AnimatedSection id="testimonials" className="py-20 bg-green-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,6 +59,52 @@ const Testimonials: React.FC = () => {
             We are proud to have powered homes and businesses across Nagpur with reliable solar energy.
           </p>
         </div>
+
+        {/* Submission Success Message */}
+        {submitted && (
+          <div className="max-w-3xl mx-auto mb-8 p-4 bg-green-100 border border-green-200 rounded-md text-center text-green-800 animate-fade-in">
+            <p className="font-semibold">Thank you! Your story has been shared.</p>
+          </div>
+        )}
+
+        {/* Add Testimonial Form */}
+        <div className="text-center mb-12">
+          {!showForm ? (
+            <button
+              onClick={() => setShowForm(true)}
+              className="bg-white text-green-600 font-bold py-3 px-8 rounded-full border-2 border-green-600 hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-105"
+            >
+              Share Your Story
+            </button>
+          ) : (
+            <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg text-left animate-fade-in-down">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Share Your Experience</h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">Your Name</label>
+                  <input type="text" name="name" id="name" value={formData.name} onChange={handleInputChange} required className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="e.g., A. Sharma" />
+                </div>
+                <div>
+                  <label htmlFor="location" className="block text-sm font-medium text-gray-700">Your Location</label>
+                  <input type="text" name="location" id="location" value={formData.location} onChange={handleInputChange} required className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="e.g., Ramdaspeth, Nagpur" />
+                </div>
+                <div>
+                  <label htmlFor="quote" className="block text-sm font-medium text-gray-700">Your Story</label>
+                  <textarea name="quote" id="quote" value={formData.quote} onChange={handleInputChange} required rows={4} className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="Tell us about your experience..."></textarea>
+                </div>
+                <div className="flex justify-end space-x-4">
+                  <button type="button" onClick={() => setShowForm(false)} className="bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-full hover:bg-gray-300 transition-colors">
+                    Cancel
+                  </button>
+                  <button type="submit" className="bg-green-600 text-white font-bold py-2 px-6 rounded-full hover:bg-green-700 transition-colors">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-white p-8 rounded-lg shadow-lg flex flex-col">
@@ -53,14 +120,6 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
-        <div className="mt-12 text-center">
-          <a
-            href="#submit-testimonial"
-            className="inline-block bg-white text-green-600 font-bold py-3 px-8 rounded-full border-2 border-green-600 hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-green-50 focus-visible:ring-green-500"
-          >
-            Share Your Story
-          </a>
         </div>
       </div>
     </AnimatedSection>
