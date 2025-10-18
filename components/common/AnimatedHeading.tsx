@@ -1,6 +1,5 @@
 import React from 'react';
-// FIX: Import Variants type to explicitly type animation variants.
-import { m, useInView, Variants } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 
 interface AnimatedHeadingProps {
   text: string;
@@ -13,22 +12,20 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const words = text.split(" ");
 
-  // FIX: Explicitly type with `Variants` to fix type inference issues with the `ease` property,
-  // ensuring compatibility with framer-motion's 'variants' prop.
-  const containerVariants: Variants = {
+  const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
         staggerChildren: 0.08,
-        ease: "easeOut",
+        // FIX: Added 'as const' to ensure TypeScript infers a literal type for 'ease'
+        // that is compatible with framer-motion's Easing type.
+        ease: "easeOut" as const,
       },
     },
   };
 
-  // FIX: Explicitly type with `Variants` to fix type inference issues where a number array was not
-  // being recognized as a valid cubic-bezier easing.
-  const wordVariants: Variants = {
+  const wordVariants = {
     hidden: {
       opacity: 0,
       y: '100%',
@@ -40,7 +37,9 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
       rotate: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1], // Custom cubic-bezier for a fluid effect
+        // FIX: Added 'as const' to ensure TypeScript infers a tuple type for the cubic-bezier
+        // array, making it compatible with framer-motion's Easing type.
+        ease: [0.22, 1, 0.36, 1] as const, // Custom cubic-bezier for a fluid effect
       },
     },
   };
