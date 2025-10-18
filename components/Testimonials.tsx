@@ -56,12 +56,23 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.name && formData.location && formData.quote) {
-      // This simulates sending the testimonial for review.
-      // A developer would then manually add it to the testimonials.json file.
+      const subject = `New Testimonial Submission from ${formData.name}`;
+      const body = `
+        A new testimonial has been submitted for review:
+        --------------------------------------------------
+        Name: ${formData.name}
+        Location: ${formData.location}
+        --------------------------------------------------
+        Testimonial:
+        "${formData.quote}"
+      `;
+
+      const mailtoLink = `mailto:greenturnsolarcare@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+      
       setFormData({ name: '', location: '', quote: '' });
       setShowForm(false);
       setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 6000); // Hide message after 6 seconds
     }
   };
   
@@ -80,7 +91,10 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
 
       {submitted && (
         <div className="max-w-3xl mx-auto mb-8 p-4 bg-green-100 border border-green-200 rounded-md text-center text-green-800 animate-fade-in">
-          <p className="font-semibold">Thank you! Your story has been submitted for review and will appear on our site soon.</p>
+          <h4 className="font-bold">Thank you!</h4>
+          <p className="mt-2 text-sm">
+            Your email client should now be open. Please review and click 'Send' to deliver your story to our team.
+          </p>
         </div>
       )}
 
