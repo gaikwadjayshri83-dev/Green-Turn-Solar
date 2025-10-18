@@ -54,6 +54,14 @@ const Testimonials: React.FC = () => {
             </div>
           ))}
         </div>
+        <div className="mt-12 text-center">
+          <a
+            href="#submit-testimonial"
+            className="inline-block bg-white text-green-600 font-bold py-3 px-8 rounded-full border-2 border-green-600 hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-green-50 focus-visible:ring-green-500"
+          >
+            Share Your Story
+          </a>
+        </div>
       </div>
     </AnimatedSection>
   );
