@@ -10,8 +10,6 @@ import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
-import { updateMetaTags } from './utils/seo.ts';
-import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 
 const routes: { [key: string]: React.ComponentType } = {
   '#home': HomePage,
@@ -30,45 +28,26 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleHashChange = () => {
-      const newRoute = window.location.hash || '#home';
-      if (newRoute !== currentRoute) {
-        setCurrentRoute(newRoute);
-        window.scrollTo(0, 0);
-      }
+      setCurrentRoute(window.location.hash || '#home');
+      window.scrollTo(0, 0);
     };
-    
-    // Set initial route
-    const initialHash = window.location.hash || '#home';
-    setCurrentRoute(initialHash);
 
     window.addEventListener('hashchange', handleHashChange);
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, [currentRoute]);
+  }, []);
 
   const Page = routes[currentRoute] || routes['#home'];
 
   return (
-    <LazyMotion features={domAnimation}>
-      <div className="bg-white text-gray-800 font-sans">
-        <Header currentRoute={currentRoute} />
-        <main>
-          <AnimatePresence mode="wait">
-            <m.div
-              key={currentRoute}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Page />
-            </m.div>
-          </AnimatePresence>
-        </main>
-        <Footer />
-      </div>
-    </LazyMotion>
+    <div className="bg-white text-gray-800 font-sans">
+      <Header currentRoute={currentRoute} />
+      <main>
+        <Page />
+      </main>
+      <Footer />
+    </div>
   );
 };
 
