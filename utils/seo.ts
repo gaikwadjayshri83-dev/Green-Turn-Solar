@@ -36,10 +36,6 @@ const SEO_DATA: { [key: string]: { title: string; description: string } } = {
     title: 'Customer Testimonials | Green Turn Solar Nagpur Reviews',
     description: 'Read what our satisfied customers in Nagpur have to say about their experience with Green Turn Solar and the benefits of their new rooftop solar systems.',
   },
-  '#submit-testimonial': {
-    title: 'Submit Your Testimonial | Green Turn Solar Nagpur',
-    description: 'Share your experience with Green Turn Solar. We value your feedback and would love to feature your story about going solar in Nagpur.',
-  },
 };
 
 const BASE_URL = 'https://greenturnsolar.com';
