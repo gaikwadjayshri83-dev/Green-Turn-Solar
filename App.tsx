@@ -13,7 +13,7 @@ import TestimonialsPage from './pages/TestimonialsPage';
 import SubmitTestimonialPage from './pages/SubmitTestimonialPage';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import LoadingSpinner from './components/common/LoadingSpinner';
-import { updateMetaTags } from './utils/seo';
+import { updateMetaTags } from './utils/seo.ts';
 
 const routes: { [key: string]: React.ComponentType } = {
   '#home': HomePage,
