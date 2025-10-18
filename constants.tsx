@@ -9,6 +9,7 @@ export const NAV_LINKS = [
   { name: 'Testimonials', href: '#testimonials' },
   { name: 'FAQ', href: '#faq' },
   { name: 'Contact', href: '#contact' },
+  { name: 'Submit Testimonial', href: '#submit-testimonial' },
 ];
 
 export const PRICING_INFO = {
@@ -42,43 +43,4 @@ export const SYSTEM_OPTIONS = {
   panels: ["Renew", "Adani", "Waaree", "UTL"],
   inverters: ["Ksolare", "UTL", "Polycab", "Havells"],
   structures: ["Nut-bolting", "Welding"],
-};
-
-export const PAGE_SEO: { [key: string]: { title: string; description: string } } = {
-  '#home': {
-    title: 'Green Turn Solar | Rooftop Solar Installation in Nagpur',
-    description: 'Leading rooftop solar panel installation and maintenance services in Nagpur. Get a free quote from Green Turn Solar for sustainable energy solutions for your home or business.',
-  },
-  '#about': {
-    title: 'About Green Turn Solar | Nagpur\'s Trusted Solar Partner',
-    description: 'Learn about the team and values driving Green Turn Solar to the forefront of renewable energy in our community. We are experts in Nagpur\'s climate and regulations.',
-  },
-  '#services': {
-    title: 'Solar Panel Services in Nagpur | Green Turn Solar',
-    description: 'We provide complete end-to-end solar solutions for homes and businesses across Nagpur, including installation, maintenance, repair, and free consultations.',
-  },
-  '#calculator': {
-    title: 'Solar Savings & Cost Calculator | Green Turn Solar Nagpur',
-    description: 'Use our AI-powered tools to estimate your savings and explore financing options for your rooftop solar system in Nagpur. See your potential ROI today.',
-  },
-  '#faq': {
-    title: 'Solar FAQs | Green Turn Solar Nagpur',
-    description: 'Have questions about going solar in Nagpur? We\'ve got answers. Ask our AI assistant about costs, savings, subsidies, and maintenance.',
-  },
-  '#contact': {
-    title: 'Contact Green Turn Solar | Free Solar Quote in Nagpur',
-    description: 'We\'re here to help you on your journey to clean, renewable energy. Reach out to us for a free, no-obligation consultation and solar quote.',
-  },
-  '#gallery': {
-    title: 'Our Solar Projects Gallery | Green Turn Solar Nagpur',
-    description: 'Explore a selection of our completed residential and commercial solar panel installation projects across Nagpur. See the quality of our work.',
-  },
-  '#build': {
-    title: 'Build Your Custom Solar System | Green Turn Solar Nagpur',
-    description: 'Select your preferred solar panels, inverters, and components to design a system that fits your needs perfectly. Get a personalized quote from our experts.',
-  },
-  '#testimonials': {
-    title: 'Customer Testimonials | Green Turn Solar Nagpur',
-    description: 'We are proud to have powered homes and businesses across Nagpur with reliable solar energy. Read reviews from our satisfied customers.',
-  },
 };
