@@ -45,7 +45,7 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
   return (
     <HeadingTag
       ref={ref}
-      className={`${className} overflow-hidden`}
+      className={`${className} overflow-hidden pb-2`}
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
