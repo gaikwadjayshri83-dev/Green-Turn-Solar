@@ -16,6 +16,21 @@ const initialTestimonials = [
     quote: "From the initial consultation to the final installation, everything was handled perfectly. The team answered all my questions patiently. I'm proud to be generating my own clean energy.",
     name: "S. Deshpande",
     location: "Manish Nagar, Nagpur",
+  },
+  {
+    quote: "The installation team was incredibly professional and efficient. They left the site cleaner than they found it! Our savings have been exactly as promised. Very happy with Green Turn Solar.",
+    name: "N. Joshi",
+    location: "Civil Lines, Nagpur",
+  },
+  {
+    quote: "We were hesitant about the initial cost, but the EMI options made it very manageable. The team helped us with all the subsidy paperwork, which was a huge relief. Excellent customer service.",
+    name: "P. Verma",
+    location: "Besa, Nagpur",
+  },
+  {
+    quote: "Choosing a local company like Green Turn Solar was the best decision. They understand the Nagpur climate and provided a system that performs exceptionally well even during the hottest months.",
+    name: "M. Kulkarni",
+    location: "Dharampeth, Nagpur",
   }
 ];
 
@@ -29,9 +44,10 @@ const DefaultAvatar: React.FC = () => (
 
 interface TestimonialsProps {
   limit?: number;
+  showHeading?: boolean;
 }
 
-const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
+const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }) => {
   const [testimonials] = useState(initialTestimonials);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ name: '', location: '', quote: '' });
@@ -57,12 +73,14 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-12">
-        <AnimatedHeading text="What Our Customers Say" className="text-3xl font-bold text-gray-800" />
-        <p className="text-gray-600 max-w-2xl mx-auto mt-4">
-          We are proud to have powered homes and businesses across Nagpur with reliable solar energy.
-        </p>
-      </div>
+      {showHeading && (
+        <div className="text-center mb-12">
+          <AnimatedHeading text="What Our Customers Say" className="text-3xl font-bold text-gray-800" />
+          <p className="text-gray-600 max-w-2xl mx-auto mt-4">
+            We are proud to have powered homes and businesses across Nagpur with reliable solar energy.
+          </p>
+        </div>
+      )}
 
       {/* Submission Success Message */}
       {submitted && (
@@ -111,7 +129,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
         </div>
       )}
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
         {displayTestimonials.map((testimonial, index) => (
           <div key={index} className="bg-white p-8 rounded-lg shadow-lg flex flex-col">
             <div className="flex-grow">
