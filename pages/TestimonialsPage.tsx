@@ -8,7 +8,7 @@ const TestimonialsPage: React.FC = () => {
     <PageWrapper
       title="What Our Customers Say"
       subtitle="We are proud to have powered homes and businesses across Nagpur with reliable solar energy."
-      className="bg-gray-50"
+      className="bg-green-50"
     >
       <AnimatedSection>
         <Testimonials />
