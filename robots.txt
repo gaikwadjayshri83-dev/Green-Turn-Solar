@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://greenturnsolar.example.com/sitemap.xml
+
+Sitemap: https://greenturnsolar.com/sitemap.xml
