@@ -10,10 +10,8 @@ import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
-import SubmitTestimonialPage from './pages/SubmitTestimonialPage';
-import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
-import LoadingSpinner from './components/common/LoadingSpinner';
 import { updateMetaTags } from './utils/seo.ts';
+import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 
 const routes: { [key: string]: React.ComponentType } = {
   '#home': HomePage,
@@ -25,34 +23,23 @@ const routes: { [key: string]: React.ComponentType } = {
   '#gallery': GalleryPage,
   '#build': BuildSystemPage,
   '#testimonials': TestimonialsPage,
-  '#submit-testimonial': SubmitTestimonialPage,
 };
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState(window.location.hash || '#home');
-  const [isPageLoading, setIsPageLoading] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
       const newRoute = window.location.hash || '#home';
-      // Don't show spinner if it's the same route
-      if (newRoute === currentRoute) return;
-
-      setIsPageLoading(true);
-
-      // Simulate a brief loading period for a smoother UX
-      setTimeout(() => {
+      if (newRoute !== currentRoute) {
         setCurrentRoute(newRoute);
-        updateMetaTags(newRoute); // Update meta tags on route change
         window.scrollTo(0, 0);
-        setIsPageLoading(false);
-      }, 300);
+      }
     };
     
-    // Set initial route without spinner
+    // Set initial route
     const initialHash = window.location.hash || '#home';
     setCurrentRoute(initialHash);
-    updateMetaTags(initialHash); // Update meta tags on initial load
 
     window.addEventListener('hashchange', handleHashChange);
     return () => {
@@ -68,28 +55,15 @@ const App: React.FC = () => {
         <Header currentRoute={currentRoute} />
         <main>
           <AnimatePresence mode="wait">
-            {isPageLoading ? (
-              <m.div 
-                key="loader"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="h-screen" // Ensure loader takes up space
-              >
-                <LoadingSpinner message="Loading Page..." />
-              </m.div>
-            ) : (
-              <m.div
-                key={currentRoute}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Page />
-              </m.div>
-            )}
+            <m.div
+              key={currentRoute}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Page />
+            </m.div>
           </AnimatePresence>
         </main>
         <Footer />
