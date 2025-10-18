@@ -9,7 +9,6 @@ export const NAV_LINKS = [
   { name: 'Testimonials', href: '#testimonials' },
   { name: 'FAQ', href: '#faq' },
   { name: 'Contact', href: '#contact' },
-  { name: 'Submit Testimonial', href: '#submit-testimonial' },
 ];
 
 export const PRICING_INFO = {
