@@ -10,8 +10,10 @@ import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
+import SubmitTestimonialPage from './pages/SubmitTestimonialPage';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
-import { PAGE_SEO } from './constants';
+import LoadingSpinner from './components/common/LoadingSpinner';
+import { updateMetaTags } from './utils/seo';
 
 const routes: { [key: string]: React.ComponentType } = {
   '#home': HomePage,
@@ -23,38 +25,40 @@ const routes: { [key: string]: React.ComponentType } = {
   '#gallery': GalleryPage,
   '#build': BuildSystemPage,
   '#testimonials': TestimonialsPage,
+  '#submit-testimonial': SubmitTestimonialPage,
 };
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState(window.location.hash || '#home');
-
-  const updateMetaTags = (route: string) => {
-    const seoData = PAGE_SEO[route] || PAGE_SEO['#home']; // Fallback to home
-    document.title = seoData.title;
-    const metaDescription = document.getElementById('meta-description') as HTMLMetaElement | null;
-    if (metaDescription) {
-      metaDescription.content = seoData.description;
-    }
-  };
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
       const newRoute = window.location.hash || '#home';
-      setCurrentRoute(newRoute);
-      updateMetaTags(newRoute);
-      window.scrollTo(0, 0);
+      // Don't show spinner if it's the same route
+      if (newRoute === currentRoute) return;
+
+      setIsPageLoading(true);
+
+      // Simulate a brief loading period for a smoother UX
+      setTimeout(() => {
+        setCurrentRoute(newRoute);
+        updateMetaTags(newRoute); // Update meta tags on route change
+        window.scrollTo(0, 0);
+        setIsPageLoading(false);
+      }, 300);
     };
     
-    // Set initial route and meta tags
+    // Set initial route without spinner
     const initialHash = window.location.hash || '#home';
     setCurrentRoute(initialHash);
-    updateMetaTags(initialHash);
+    updateMetaTags(initialHash); // Update meta tags on initial load
 
     window.addEventListener('hashchange', handleHashChange);
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, []); // Run only once on component mount
+  }, [currentRoute]);
 
   const Page = routes[currentRoute] || routes['#home'];
 
@@ -64,15 +68,28 @@ const App: React.FC = () => {
         <Header currentRoute={currentRoute} />
         <main>
           <AnimatePresence mode="wait">
-            <m.div
-              key={currentRoute}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-            >
-              <Page />
-            </m.div>
+            {isPageLoading ? (
+              <m.div 
+                key="loader"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="h-screen" // Ensure loader takes up space
+              >
+                <LoadingSpinner message="Loading Page..." />
+              </m.div>
+            ) : (
+              <m.div
+                key={currentRoute}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Page />
+              </m.div>
+            )}
           </AnimatePresence>
         </main>
         <Footer />
