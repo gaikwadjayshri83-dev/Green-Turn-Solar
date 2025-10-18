@@ -10,7 +10,7 @@ import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import BuildSystemPage from './pages/BuildSystemPage';
 import TestimonialsPage from './pages/TestimonialsPage';
-import SubmitTestimonialPage from './pages/SubmitTestimonialPage.tsx';
+import SubmitTestimonialPage from './pages/SubmitTestimonialPage';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import LoadingSpinner from './components/common/LoadingSpinner';
 import { updateMetaTags } from './utils/seo';
