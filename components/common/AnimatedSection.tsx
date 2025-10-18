@@ -1,5 +1,5 @@
 import React from 'react';
-import { m, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className =
   };
 
   return (
-    <m.section
+    <motion.section
       id={id}
       ref={ref}
       initial="hidden"
@@ -27,7 +27,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className =
       className={className}
     >
       {children}
-    </m.section>
+    </motion.section>
   );
 };
 
