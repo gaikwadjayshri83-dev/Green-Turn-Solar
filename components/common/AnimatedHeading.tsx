@@ -1,5 +1,5 @@
 import React from 'react';
-import { m, useInView } from 'framer-motion';
+import { motion, useInView, Variants } from 'framer-motion';
 
 interface AnimatedHeadingProps {
   text: string;
@@ -12,20 +12,18 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const words = text.split(" ");
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
         staggerChildren: 0.08,
-        // FIX: Added 'as const' to ensure TypeScript infers a literal type for 'ease'
-        // that is compatible with framer-motion's Easing type.
-        ease: "easeOut" as const,
+        ease: "easeOut",
       },
     },
   };
 
-  const wordVariants = {
+  const wordVariants: Variants = {
     hidden: {
       opacity: 0,
       y: '100%',
@@ -37,14 +35,12 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
       rotate: 0,
       transition: {
         duration: 0.6,
-        // FIX: Added 'as const' to ensure TypeScript infers a tuple type for the cubic-bezier
-        // array, making it compatible with framer-motion's Easing type.
-        ease: [0.22, 1, 0.36, 1] as const, // Custom cubic-bezier for a fluid effect
+        ease: [0.22, 1, 0.36, 1], // Custom cubic-bezier for a fluid effect
       },
     },
   };
 
-  const HeadingTag = m[el];
+  const HeadingTag = motion[el];
 
   return (
     <HeadingTag
@@ -55,14 +51,14 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({ text, el = 'h2', clas
       animate={isInView ? 'visible' : 'hidden'}
     >
       {words.map((word, index) => (
-        <m.span
+        <motion.span
           key={index}
           className="inline-block"
           style={{ paddingRight: '0.25em' }}
           variants={wordVariants}
         >
           {word}
-        </m.span>
+        </motion.span>
       ))}
     </HeadingTag>
   );
