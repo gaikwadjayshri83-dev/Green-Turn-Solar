@@ -1,38 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnimatedHeading from './common/AnimatedHeading';
+import Spinner from './common/Spinner';
 
-const initialTestimonials = [
-  {
-    quote: "Green Turn Solar made the entire process seamless. Our electricity bill has dropped by 90%! The team was professional and knowledgeable. Highly recommended for anyone in Nagpur.",
-    name: "A. Sharma",
-    location: "Ramdaspeth, Nagpur",
-  },
-  {
-    quote: "I was impressed with their technical expertise. They designed the perfect system for our commercial establishment. The investment is already paying for itself. Fantastic service!",
-    name: "R. Patel",
-    location: "MIDC, Nagpur",
-  },
-  {
-    quote: "From the initial consultation to the final installation, everything was handled perfectly. The team answered all my questions patiently. I'm proud to be generating my own clean energy.",
-    name: "S. Deshpande",
-    location: "Manish Nagar, Nagpur",
-  },
-  {
-    quote: "The installation team was incredibly professional and efficient. They left the site cleaner than they found it! Our savings have been exactly as promised. Very happy with Green Turn Solar.",
-    name: "N. Joshi",
-    location: "Civil Lines, Nagpur",
-  },
-  {
-    quote: "We were hesitant about the initial cost, but the EMI options made it very manageable. The team helped us with all the subsidy paperwork, which was a huge relief. Excellent customer service.",
-    name: "P. Verma",
-    location: "Besa, Nagpur",
-  },
-  {
-    quote: "Choosing a local company like Green Turn Solar was the best decision. They understand the Nagpur climate and provided a system that performs exceptionally well even during the hottest months.",
-    name: "M. Kulkarni",
-    location: "Dharampeth, Nagpur",
-  }
-];
+interface Testimonial {
+  quote: string;
+  name: string;
+  location: string;
+}
 
 const DefaultAvatar: React.FC = () => (
     <div className="w-14 h-14 rounded-full mr-4 bg-gray-200 flex items-center justify-center flex-shrink-0" aria-hidden="true">
@@ -48,10 +22,31 @@ interface TestimonialsProps {
 }
 
 const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }) => {
-  const [testimonials] = useState(initialTestimonials);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ name: '', location: '', quote: '' });
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/assets/data/testimonials.json');
+        if (!response.ok) {
+          throw new Error('Could not fetch testimonials.');
+        }
+        const data = await response.json();
+        setTestimonials(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -61,7 +56,8 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.name && formData.location && formData.quote) {
-      // Don't add to local state. This simulates sending for review.
+      // This simulates sending the testimonial for review.
+      // A developer would then manually add it to the testimonials.json file.
       setFormData({ name: '', location: '', quote: '' });
       setShowForm(false);
       setSubmitted(true);
@@ -82,14 +78,12 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
         </div>
       )}
 
-      {/* Submission Success Message */}
       {submitted && (
         <div className="max-w-3xl mx-auto mb-8 p-4 bg-green-100 border border-green-200 rounded-md text-center text-green-800 animate-fade-in">
           <p className="font-semibold">Thank you! Your story has been submitted for review and will appear on our site soon.</p>
         </div>
       )}
 
-      {/* Add Testimonial Form - Don't show on limited homepage view */}
       {!limit && (
         <div className="text-center mb-12">
             {!showForm ? (
@@ -129,22 +123,27 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
         </div>
       )}
 
-      <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-        {displayTestimonials.map((testimonial, index) => (
-          <div key={index} className="bg-white p-8 rounded-lg shadow-lg flex flex-col">
-            <div className="flex-grow">
-              <p className="text-gray-600 mb-6 italic">"{testimonial.quote}"</p>
-            </div>
-            <div className="flex items-center mt-auto">
-              <DefaultAvatar />
-              <div>
-                <p className="font-bold text-gray-800">{testimonial.name}</p>
-                <p className="text-sm text-gray-500">{testimonial.location}</p>
+      {isLoading && <div className="flex justify-center items-center h-40"><Spinner className="h-12 w-12 text-green-600" /></div>}
+      {error && <div className="text-center text-red-600 bg-red-100 p-4 rounded-md">{error}</div>}
+      
+      {!isLoading && !error && (
+        <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+          {displayTestimonials.map((testimonial, index) => (
+            <div key={index} className="bg-white p-8 rounded-lg shadow-lg flex flex-col">
+              <div className="flex-grow">
+                <p className="text-gray-600 mb-6 italic">"{testimonial.quote}"</p>
+              </div>
+              <div className="flex items-center mt-auto">
+                <DefaultAvatar />
+                <div>
+                  <p className="font-bold text-gray-800">{testimonial.name}</p>
+                  <p className="text-sm text-gray-500">{testimonial.location}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       
       {limit && testimonials.length > limit && (
         <div className="text-center mt-12">
