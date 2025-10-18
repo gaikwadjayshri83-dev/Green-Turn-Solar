@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AnimatedHeading from './common/AnimatedHeading';
 
 const initialTestimonials = [
@@ -31,31 +31,11 @@ interface TestimonialsProps {
   limit?: number;
 }
 
-const TESTIMONIALS_STORAGE_KEY = 'green-turn-solar-testimonials';
-
 const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
-  const [testimonials, setTestimonials] = useState(() => {
-    try {
-      const storedTestimonials = window.localStorage.getItem(TESTIMONIALS_STORAGE_KEY);
-      return storedTestimonials ? JSON.parse(storedTestimonials) : initialTestimonials;
-    } catch (error) {
-      console.error("Error reading testimonials from localStorage", error);
-      return initialTestimonials;
-    }
-  });
-  
+  const [testimonials] = useState(initialTestimonials);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ name: '', location: '', quote: '' });
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonials));
-    } catch (error) {
-      console.error("Error saving testimonials to localStorage", error);
-    }
-  }, [testimonials]);
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -65,11 +45,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.name && formData.location && formData.quote) {
-      setTestimonials(prev => [formData, ...prev]);
+      // Don't add to local state. This simulates sending for review.
       setFormData({ name: '', location: '', quote: '' });
       setShowForm(false);
       setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 5000); // Hide message after 5 seconds
+      setTimeout(() => setSubmitted(false), 6000); // Hide message after 6 seconds
     }
   };
   
@@ -87,7 +67,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
       {/* Submission Success Message */}
       {submitted && (
         <div className="max-w-3xl mx-auto mb-8 p-4 bg-green-100 border border-green-200 rounded-md text-center text-green-800 animate-fade-in">
-          <p className="font-semibold">Thank you! Your story has been shared.</p>
+          <p className="font-semibold">Thank you! Your story has been submitted for review and will appear on our site soon.</p>
         </div>
       )}
 
@@ -122,7 +102,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit }) => {
                         Cancel
                     </button>
                     <button type="submit" className="bg-green-600 text-white font-bold py-2 px-6 rounded-full hover:bg-green-700 transition-colors">
-                        Submit
+                        Submit for Review
                     </button>
                     </div>
                 </form>
