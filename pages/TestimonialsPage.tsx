@@ -11,7 +11,7 @@ const TestimonialsPage: React.FC = () => {
       className="bg-green-50"
     >
       <AnimatedSection>
-        <Testimonials />
+        <Testimonials showHeading={false} />
       </AnimatedSection>
     </PageWrapper>
   );
