@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NAV_LINKS } from '../constants';
 import ImageWithSpinner from './common/ImageWithSpinner';
@@ -14,13 +15,12 @@ const Footer: React.FC = () => {
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
-            <a href="#home" className="inline-block mb-4">
+            <a href="/" className="inline-block mb-4">
               <div className="h-10 w-auto">
                 <ImageWithSpinner 
-                  src="/images/logo.svg" 
+                  src="/assets/logo/logo.svg" 
                   alt="Green Turn Solar Logo" 
-                  imageClassName="object-contain object-left"
-                  containerClassName="bg-transparent"
+                  imageClassName="object-contain object-left" 
                 />
               </div>
             </a>
