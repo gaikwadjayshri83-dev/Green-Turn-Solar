@@ -1,14 +1,15 @@
+
 // FIX: Added constants for navigation, pricing, and FAQs to be used throughout the application.
 export const NAV_LINKS = [
-  { name: 'Home', href: '#home' },
-  { name: 'Services', href: '#services' },
-  { name: 'Build System', href: '#build' },
-  { name: 'About', href: '#about' },
-  { name: 'Calculator', href: '#calculator' },
-  { name: 'Gallery', href: '#gallery' },
-  { name: 'Testimonials', href: '#testimonials' },
-  { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'Build System', href: '/build' },
+  { name: 'About', href: '/about' },
+  { name: 'Calculator', href: '/calculator' },
+  { name: 'Gallery', href: '/gallery' },
+  { name: 'Testimonials', href: '/testimonials' },
+  { name: 'FAQ', href: '/faq' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export const PRICING_INFO = {
