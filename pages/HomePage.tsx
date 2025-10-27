@@ -8,7 +8,6 @@ import AnimatedSection from '../components/common/AnimatedSection';
 import AnimatedHeading from '../components/common/AnimatedHeading';
 import Faq from '../components/Faq';
 import Contact from '../components/Contact';
-import GoogleReviews from '../components/GoogleReviews';
 
 const HomePage: React.FC = () => {
   return (
@@ -24,9 +23,6 @@ const HomePage: React.FC = () => {
         <a href="/calculator" className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block">
             Launch Calculator
         </a>
-      </AnimatedSection>
-      <AnimatedSection id="reviews-section" className="py-20 bg-green-50">
-        <GoogleReviews />
       </AnimatedSection>
       <AnimatedSection id="testimonials-section" className="py-20 bg-white">
         <Testimonials limit={3} />
