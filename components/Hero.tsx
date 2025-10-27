@@ -1,3 +1,4 @@
+
 import React from 'react';
 import LottieAnimation from './LottieAnimation';
 import AnimatedHeading from './common/AnimatedHeading';
@@ -12,9 +13,8 @@ const Hero: React.FC = () => {
         aria-label="Rooftop solar panels on a modern house in Nagpur"
       >
         <ImageWithSpinner
-          src="/images/hero-background.jpg"
+          src="/assets/home/hero-background.jpg"
           alt="Background image of rooftop solar panels"
-          containerClassName="bg-gray-100"
         />
       </div>
 
@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
         <p className="text-lg md:text-xl mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>
           Join the solar revolution with Green Turn Solar. Reduce your electricity bills, increase property value, and build a sustainable future.
         </p>
-        <a href="#calculator" className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block animate-fade-in-up focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800 focus-visible:ring-green-500" style={{ animationDelay: '0.4s' }}>
+        <a href="/calculator" className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block animate-fade-in-up focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800 focus-visible:ring-green-500" style={{ animationDelay: '0.4s' }}>
           Calculate Your Savings
         </a>
       </div>
