@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedHeading from './common/AnimatedHeading';
-import StarIcon from './common/StarIcon';
+import StarIcon from './common/StarIcon.tsx';
 import GoogleLogo from './common/GoogleLogo';
 import SkeletonLoader from './common/SkeletonLoader';
 import ImageWithSpinner from './common/ImageWithSpinner';
