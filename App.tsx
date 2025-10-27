@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -109,7 +110,9 @@ const App: React.FC = () => {
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', meta.description);
     document.querySelector('meta[property="twitter:title"]')?.setAttribute('content', meta.title);
     document.querySelector('meta[property="twitter:description"]')?.setAttribute('content', meta.description);
+
     const canonicalUrl = window.location.origin + currentPath;
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl);
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
     document.querySelector('meta[property="twitter:url"]')?.setAttribute('content', canonicalUrl);
 
