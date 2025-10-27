@@ -1,8 +1,17 @@
 
+
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import PageLoader from './components/common/PageLoader';
+
+// --- PageLoader Component (Inlined to fix build error) ---
+const PageLoader: React.FC = () => {
+  return (
+    <div className="flex justify-center items-center" style={{ minHeight: 'calc(100vh - 250px)' }}>
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
+    </div>
+  );
+};
 
 const pageMeta = {
   '/': { 
