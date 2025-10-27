@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import AnimatedHeading from './common/AnimatedHeading';
 
@@ -168,7 +169,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
       {limit && testimonials.length > limit && (
         <div className="text-center mt-12">
             <a 
-              href="#testimonials"
+              href="/testimonials"
               className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 focus-visible:ring-green-500"
             >
               Read More Stories
