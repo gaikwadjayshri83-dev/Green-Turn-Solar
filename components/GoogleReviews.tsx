@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedHeading from './common/AnimatedHeading';
-import GoogleLogo from './common/GoogleLogo';
-import SkeletonLoader from './common/SkeletonLoader';
 import ImageWithSpinner from './common/ImageWithSpinner';
 
 // --- StarIcon Component (Inlined to fix build error) ---
@@ -28,6 +26,30 @@ const StarIcon: React.FC<StarIconProps> = ({ fill, className = 'w-5 h-5' }) => {
     >
       <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
     </svg>
+  );
+};
+
+// --- GoogleLogo Component (Inlined to fix build error) ---
+const GoogleLogo: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+    <svg className={className} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#4285F4" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.19,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.19,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.19,22C17.6,22 21.5,18.33 21.5,12.33C21.5,11.76 21.35,11.1 21.35,11.1Z"/>
+    </svg>
+);
+
+// --- SkeletonLoader Component (Inlined to fix build error) ---
+const SkeletonLoader: React.FC = () => {
+  return (
+    <div className="p-4 rounded-md border animate-pulse">
+      <div className="flex items-center mb-3">
+        <div className="w-10 h-10 rounded-full bg-gray-200 mr-3"></div>
+        <div className="flex-grow">
+          <div className="h-4 bg-gray-200 rounded w-1/3 mb-1"></div>
+          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+        </div>
+      </div>
+      <div className="h-3 bg-gray-200 rounded w-full mb-1"></div>
+      <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+    </div>
   );
 };
 
