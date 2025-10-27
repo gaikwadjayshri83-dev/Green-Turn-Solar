@@ -114,17 +114,23 @@ const GoogleReviews: React.FC = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                // FIX: Corrected the API path for the serverless function to resolve the 404 error.
-                // Many platforms map the 'functions' directory to an '/api' route.
                 const response = await fetch('/api/google-reviews');
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorData = await response.json().catch(() => null);
+                    if (errorData && errorData.error === 'Server configuration error.') {
+                        throw new Error('Server configuration error.');
+                    }
+                    throw new Error(`The server responded with status: ${response.status}`);
                 }
                 const result: GoogleReviewsData = await response.json();
                 setData(result);
             } catch (e) {
                 console.error("Failed to fetch Google reviews:", e);
-                setError("Could not load live reviews. Showing examples.");
+                if (e instanceof Error && e.message === 'Server configuration error.') {
+                    setError("Live reviews could not be loaded. Please ensure API keys are set in your deployment environment's variables.");
+                } else {
+                    setError("Could not load live reviews. Showing examples.");
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -144,7 +150,7 @@ const GoogleReviews: React.FC = () => {
                 <p className="text-gray-600 max-w-2xl mx-auto mt-4">
                     We're Nagpur's top-rated solar installer for a reason. See what our clients are saying on Google.
                 </p>
-                 {error && <p className="mt-4 text-sm text-yellow-700 bg-yellow-100 p-2 rounded-md inline-block">{error}</p>}
+                 {error && <p className="mt-4 text-sm text-yellow-800 bg-yellow-100 p-3 rounded-md inline-block shadow-sm border border-yellow-200">{error}</p>}
             </div>
             
             <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200">
@@ -163,12 +169,12 @@ const GoogleReviews: React.FC = () => {
                         </div>
                    </div>
                    <a
-                     href="https://www.google.com/maps/search/?api=1&query=Green+Turn+Solar&query_place_id=ChIJgY7nBw5p0DsR6Z4i-Z4i-Z4" // Example Place ID, user must replace
+                     href="https://www.google.com/maps/search/?api=1&query=Green+Turn+Solar%2C+Nagpur"
                      target="_blank"
                      rel="noopener noreferrer"
                      className="bg-blue-500 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:scale-105"
                    >
-                     See All Reviews
+                     See All Reviews on Google
                    </a>
                 </div>
 
