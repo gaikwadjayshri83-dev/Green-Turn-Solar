@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { NAV_LINKS } from '../constants';
 import ImageWithSpinner from './common/ImageWithSpinner';
 
-const Header: React.FC<{ currentRoute: string }> = ({ currentRoute }) => {
+const Header: React.FC<{ currentPath: string }> = ({ currentPath }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -18,13 +19,12 @@ const Header: React.FC<{ currentRoute: string }> = ({ currentRoute }) => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-white/80 shadow-md backdrop-blur-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="#home" className="flex items-center space-x-3">
+          <a href="/" className="flex items-center space-x-3">
             <div className="h-10 w-auto">
               <ImageWithSpinner 
-                src="/images/logo.svg" 
+                src="/assets/logo/logo.svg" 
                 alt="Green Turn Solar Logo" 
-                imageClassName="object-contain"
-                containerClassName="bg-transparent"
+                imageClassName="object-contain" 
               />
             </div>
           </a>
@@ -34,14 +34,14 @@ const Header: React.FC<{ currentRoute: string }> = ({ currentRoute }) => {
               <a 
                 key={link.name} 
                 href={link.href} 
-                className={`font-medium transition-colors pb-1 border-b-2 ${currentRoute === link.href ? 'text-green-600 border-green-600' : 'text-gray-600 border-transparent hover:text-green-600'}`}
+                className={`font-medium transition-colors pb-1 border-b-2 ${currentPath === link.href ? 'text-green-600 border-green-600' : 'text-gray-600 border-transparent hover:text-green-600'}`}
               >
                 {link.name}
               </a>
             ))}
           </nav>
 
-          <a href="#contact" className="hidden lg:inline-block bg-green-600 text-white font-bold py-2 px-6 rounded-full hover:bg-green-700 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500">
+          <a href="/contact" className="hidden lg:inline-block bg-green-600 text-white font-bold py-2 px-6 rounded-full hover:bg-green-700 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500">
             Free Quote
           </a>
           
@@ -63,12 +63,12 @@ const Header: React.FC<{ currentRoute: string }> = ({ currentRoute }) => {
                 key={link.name} 
                 href={link.href} 
                 onClick={() => setIsMenuOpen(false)} 
-                className={`font-medium text-lg ${currentRoute === link.href ? 'text-green-600' : 'text-gray-600 hover:text-green-600'}`}
+                className={`font-medium text-lg ${currentPath === link.href ? 'text-green-600' : 'text-gray-600 hover:text-green-600'}`}
               >
                 {link.name}
               </a>
             ))}
-            <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-green-600 text-white font-bold py-3 px-8 rounded-full hover:bg-green-700 transition-transform hover:scale-105">
+            <a href="/contact" onClick={() => setIsMenuOpen(false)} className="bg-green-600 text-white font-bold py-3 px-8 rounded-full hover:bg-green-700 transition-transform hover:scale-105">
               Free Quote
             </a>
           </nav>
