@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { getFaqAnswer } from '../services/geminiService';
 import { FAQ_QUESTIONS } from '../constants';
@@ -5,13 +6,17 @@ import AnimatedSection from './common/AnimatedSection';
 import AnimatedHeading from './common/AnimatedHeading';
 import Spinner from './common/Spinner';
 
-const FaqItem: React.FC<{ question: string; children: React.ReactNode; }> = ({ question, children }) => {
+const FaqItem: React.FC<{ question: string; children: React.ReactNode; isLoading: boolean; onAsk: () => void; }> = ({ question, children, isLoading, onAsk }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const answerId = `faq-answer-${question.replace(/\s+/g, '-').toLowerCase()}`;
+  
   return (
     <div className="border-b border-gray-200 py-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left text-gray-800 focus:outline-none"
+        aria-expanded={isOpen}
+        aria-controls={answerId}
       >
         <span className="font-medium">{question}</span>
         <svg
@@ -23,7 +28,22 @@ const FaqItem: React.FC<{ question: string; children: React.ReactNode; }> = ({ q
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {isOpen && <div className="mt-3 text-gray-600 animate-fade-in-down">{children}</div>}
+      {isOpen && (
+        <div 
+          id={answerId} 
+          role="region"
+          className="mt-3 text-gray-600 animate-fade-in-down"
+        >
+          {isLoading ? (
+            <div className="flex items-center text-gray-500">
+              <Spinner className="h-4 w-4 mr-2 text-green-600" />
+              <span>Getting answer...</span>
+            </div>
+          ) : (
+            children
+          )}
+        </div>
+      )}
     </div>
   );
 };
@@ -107,18 +127,13 @@ const Faq: React.FC = () => {
               {FAQ_QUESTIONS.map((q, i) => (
                 <FaqItem 
                   key={i} 
-                  question={q}
+                  question={q} 
+                  isLoading={isLoading && loadingQuestion === q}
+                  onAsk={() => handlePresetQuestion(q)}
                 >
-                  {isLoading && loadingQuestion === q ? (
-                    <div className="flex items-center text-gray-500">
-                      <Spinner className="h-4 w-4 mr-2 text-green-600" />
-                      <span>Getting answer...</span>
-                    </div>
-                  ) : (
-                    <button onClick={() => handlePresetQuestion(q)} className="text-green-600 hover:underline">
-                        Ask AI for an answer...
-                    </button>
-                  )}
+                  <button onClick={() => handlePresetQuestion(q)} className="text-green-600 hover:underline">
+                      Ask AI for an answer...
+                  </button>
                 </FaqItem>
               ))}
             </div>
