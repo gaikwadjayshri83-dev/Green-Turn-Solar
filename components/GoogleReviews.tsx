@@ -140,8 +140,26 @@ const GoogleReviews: React.FC = () => {
     }, []);
 
     const reviewsToShow = (data?.reviews && data.reviews.length > 0) ? data.reviews.slice(0, 3) : staticReviewsData;
-    const overallRating = data?.rating ?? 4.9;
+    const overallRating = data?.rating ?? 4.2;
     const totalRatings = data?.totalRatings ?? 125;
+
+    const renderOverallStars = (rating: number) => {
+        const stars = [];
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+        for (let i = 0; i < fullStars; i++) {
+            stars.push(<StarIcon key={`full-${i}`} fill="full" />);
+        }
+        if (hasHalfStar) {
+            stars.push(<StarIcon key="half" fill="half" />);
+        }
+        for (let i = 0; i < emptyStars; i++) {
+            stars.push(<StarIcon key={`empty-${i}`} fill="empty" />);
+        }
+        return stars;
+    };
     
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -162,7 +180,7 @@ const GoogleReviews: React.FC = () => {
                             <div className="flex items-center gap-2 mt-1">
                                 <span className="text-lg font-bold text-gray-700">{overallRating.toFixed(1)}</span>
                                 <div className="flex items-center">
-                                    <StarIcon fill="full" /><StarIcon fill="full" /><StarIcon fill="full" /><StarIcon fill="full" /><StarIcon fill={overallRating > 4.5 ? 'full' : 'half'} />
+                                    {renderOverallStars(overallRating)}
                                 </div>
                                 <span className="text-gray-500 text-sm">{totalRatings}+ reviews</span>
                             </div>
