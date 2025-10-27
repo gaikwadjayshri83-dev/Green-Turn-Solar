@@ -1,0 +1,160 @@
+import React, { useState, useEffect } from 'react';
+import AnimatedHeading from './common/AnimatedHeading';
+import StarIcon from './common/StarIcon';
+import GoogleLogo from './common/GoogleLogo';
+import SkeletonLoader from './common/SkeletonLoader';
+import ImageWithSpinner from './common/ImageWithSpinner';
+
+// --- Static Fallback Data ---
+const staticReviewsData = [
+    {
+        author_name: "A. Sharma",
+        rating: 5,
+        text: "Green Turn Solar made the entire process seamless. Our electricity bill has dropped by 90%! The team was professional and knowledgeable. Highly recommended for anyone in Nagpur.",
+        profile_photo_url: '' // No image for static data
+    },
+    {
+        author_name: "R. Patel",
+        rating: 5,
+        text: "I was impressed with their technical expertise. They designed the perfect system for our commercial establishment. The investment is already paying for itself. Fantastic service!",
+        profile_photo_url: ''
+    },
+    {
+        author_name: "S. Deshpande",
+        rating: 5,
+        text: "From the initial consultation to the final installation, everything was handled perfectly. The team answered all my questions patiently. I'm proud to be generating my own clean energy.",
+        profile_photo_url: ''
+    }
+];
+
+// --- Type Definitions ---
+interface Review {
+    author_name: string;
+    profile_photo_url: string;
+    rating: number;
+    text: string;
+}
+
+interface GoogleReviewsData {
+    name: string;
+    rating: number;
+    totalRatings: number;
+    reviews: Review[];
+}
+
+// --- Sub-components ---
+const RatingStars: React.FC<{ rating: number }> = ({ rating }) => (
+    <div className="flex items-center">
+        {[...Array(5)].map((_, i) => (
+            <StarIcon key={i} fill={i < Math.round(rating) ? 'full' : 'empty'} className="w-4 h-4" />
+        ))}
+    </div>
+);
+
+const DefaultAvatar: React.FC<{ name: string }> = ({ name }) => (
+    <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-lg mr-3 flex-shrink-0">
+        {name.charAt(0).toUpperCase()}
+    </div>
+);
+
+// --- Main Component ---
+const GoogleReviews: React.FC = () => {
+    const [data, setData] = useState<GoogleReviewsData | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                // FIX: Corrected the API path for the serverless function to resolve the 404 error.
+                // Many platforms map the 'functions' directory to an '/api' route.
+                const response = await fetch('/api/google-reviews');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result: GoogleReviewsData = await response.json();
+                setData(result);
+            } catch (e) {
+                console.error("Failed to fetch Google reviews:", e);
+                setError("Could not load live reviews. Showing examples.");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchReviews();
+    }, []);
+
+    const reviewsToShow = (data?.reviews && data.reviews.length > 0) ? data.reviews.slice(0, 3) : staticReviewsData;
+    const overallRating = data?.rating ?? 4.9;
+    const totalRatings = data?.totalRatings ?? 125;
+    
+    return (
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+                <AnimatedHeading text="Real Reviews from Real Customers" className="text-3xl font-bold text-gray-800" />
+                <p className="text-gray-600 max-w-2xl mx-auto mt-4">
+                    We're Nagpur's top-rated solar installer for a reason. See what our clients are saying on Google.
+                </p>
+                 {error && <p className="mt-4 text-sm text-yellow-700 bg-yellow-100 p-2 rounded-md inline-block">{error}</p>}
+            </div>
+            
+            <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 pb-6 border-b">
+                   <div className="flex items-center gap-4">
+                        <GoogleLogo className="w-10 h-10" />
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-800">Green Turn Solar</h3>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="text-lg font-bold text-gray-700">{overallRating.toFixed(1)}</span>
+                                <div className="flex items-center">
+                                    <StarIcon fill="full" /><StarIcon fill="full" /><StarIcon fill="full" /><StarIcon fill="full" /><StarIcon fill={overallRating > 4.5 ? 'full' : 'half'} />
+                                </div>
+                                <span className="text-gray-500 text-sm">{totalRatings}+ reviews</span>
+                            </div>
+                        </div>
+                   </div>
+                   <a
+                     href="https://www.google.com/maps/search/?api=1&query=Green+Turn+Solar&query_place_id=ChIJgY7nBw5p0DsR6Z4i-Z4i-Z4" // Example Place ID, user must replace
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="bg-blue-500 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:scale-105"
+                   >
+                     See All Reviews
+                   </a>
+                </div>
+
+                <div className="space-y-6">
+                    {isLoading ? (
+                        <>
+                            <SkeletonLoader />
+                            <SkeletonLoader />
+                            <SkeletonLoader />
+                        </>
+                    ) : (
+                        reviewsToShow.map((review, index) => (
+                            <div key={index} className="p-4 rounded-md border animate-fade-in">
+                                <div className="flex items-center mb-2">
+                                    {review.profile_photo_url ? (
+                                        <div className="w-10 h-10 rounded-full mr-3 flex-shrink-0 overflow-hidden">
+                                            <ImageWithSpinner src={review.profile_photo_url} alt={`${review.author_name}'s profile picture`} />
+                                        </div>
+                                    ) : (
+                                        <DefaultAvatar name={review.author_name} />
+                                    )}
+                                    <div>
+                                        <p className="font-semibold text-gray-800">{review.author_name}</p>
+                                        <RatingStars rating={review.rating} />
+                                    </div>
+                                </div>
+                                <p className="text-gray-600 text-sm italic">"{review.text}"</p>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default GoogleReviews;
