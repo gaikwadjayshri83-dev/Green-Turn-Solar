@@ -1,37 +1,66 @@
-
 import React, { useState } from 'react';
 import AnimatedHeading from './common/AnimatedHeading';
+
+// --- StarIcon Component (Inlined to avoid build errors) ---
+interface StarIconProps {
+  fill: 'full' | 'empty';
+  className?: string;
+}
+const StarIcon: React.FC<StarIconProps> = ({ fill, className = 'w-5 h-5' }) => (
+  <svg 
+    className={`${className} ${fill === 'full' ? 'text-yellow-400' : 'text-gray-300'}`} 
+    fill="currentColor" 
+    viewBox="0 0 24 24"
+  >
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
+
+// --- RatingStars Component (Inlined for simplicity) ---
+const RatingStars: React.FC<{ rating: number }> = ({ rating }) => (
+    <div className="flex items-center">
+        {[...Array(5)].map((_, i) => (
+            <StarIcon key={i} fill={i < rating ? 'full' : 'empty'} className="w-5 h-5" />
+        ))}
+    </div>
+);
 
 const testimonialsData = [
   {
     "quote": "Green Turn Solar made the entire process seamless. Our electricity bill has dropped by 90%! The team was professional and knowledgeable. Highly recommended for anyone in Nagpur.",
     "name": "A. Sharma",
-    "location": "Ramdaspeth, Nagpur"
+    "location": "Ramdaspeth, Nagpur",
+    "rating": 5
   },
   {
     "quote": "I was impressed with their technical expertise. They designed the perfect system for our commercial establishment. The investment is already paying for itself. Fantastic service!",
     "name": "R. Patel",
-    "location": "MIDC, Nagpur"
+    "location": "MIDC, Nagpur",
+    "rating": 5
   },
   {
     "quote": "From the initial consultation to the final installation, everything was handled perfectly. The team answered all my questions patiently. I'm proud to be generating my own clean energy.",
     "name": "S. Deshpande",
-    "location": "Manish Nagar, Nagpur"
+    "location": "Manish Nagar, Nagpur",
+    "rating": 5
   },
   {
     "quote": "The installation team was incredibly professional and efficient. They left the site cleaner than they found it! Our savings have been exactly as promised. Very happy with Green Turn Solar.",
     "name": "N. Joshi",
-    "location": "Civil Lines, Nagpur"
+    "location": "Civil Lines, Nagpur",
+    "rating": 4
   },
   {
     "quote": "We were hesitant about the initial cost, but the EMI options made it very manageable. The team helped us with all the subsidy paperwork, which was a huge relief. Excellent customer service.",
     "name": "P. Verma",
-    "location": "Besa, Nagpur"
+    "location": "Besa, Nagpur",
+    "rating": 5
   },
   {
     "quote": "Choosing a local company like Green Turn Solar was the best decision. They understand the Nagpur climate and provided a system that performs exceptionally well even during the hottest months.",
     "name": "M. Kulkarni",
-    "location": "Dharampeth, Nagpur"
+    "location": "Dharampeth, Nagpur",
+    "rating": 4
   }
 ];
 
@@ -39,6 +68,7 @@ interface Testimonial {
   quote: string;
   name: string;
   location: string;
+  rating: number;
 }
 
 const DefaultAvatar: React.FC = () => (
@@ -153,7 +183,8 @@ const Testimonials: React.FC<TestimonialsProps> = ({ limit, showHeading = true }
         {displayTestimonials.map((testimonial, index) => (
           <div key={index} className="bg-white p-8 rounded-lg shadow-lg flex flex-col">
             <div className="flex-grow">
-              <p className="text-gray-600 mb-6 italic">"{testimonial.quote}"</p>
+              <RatingStars rating={testimonial.rating} />
+              <p className="text-gray-600 my-4 italic">"{testimonial.quote}"</p>
             </div>
             <div className="flex items-center mt-auto">
               <DefaultAvatar />
