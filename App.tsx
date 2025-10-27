@@ -1,17 +1,8 @@
 
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import CalculatorPage from './pages/CalculatorPage';
-import FaqPage from './pages/FaqPage';
-import ContactPage from './pages/ContactPage';
-import GalleryPage from './pages/GalleryPage';
-import BuildSystemPage from './pages/BuildSystemPage';
-import TestimonialsPage from './pages/TestimonialsPage';
+import PageLoader from './components/common/PageLoader';
 
 const pageMeta = {
   '/': { 
@@ -52,7 +43,18 @@ const pageMeta = {
   },
 };
 
-const routes: { [key: string]: React.ComponentType } = {
+// Lazy load page components for code splitting
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const CalculatorPage = lazy(() => import('./pages/CalculatorPage'));
+const FaqPage = lazy(() => import('./pages/FaqPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const GalleryPage = lazy(() => import('./pages/GalleryPage'));
+const BuildSystemPage = lazy(() => import('./pages/BuildSystemPage'));
+const TestimonialsPage = lazy(() => import('./pages/TestimonialsPage'));
+
+const routes: { [key: string]: React.LazyExoticComponent<React.ComponentType> } = {
   '/': HomePage,
   '/about': AboutPage,
   '/services': ServicesPage,
@@ -125,7 +127,9 @@ const App: React.FC = () => {
     <div className="bg-white text-gray-800 font-sans">
       <Header currentPath={currentPath} />
       <main>
-        <Page />
+        <Suspense fallback={<PageLoader />}>
+          <Page />
+        </Suspense>
       </main>
       <Footer />
     </div>
