@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import PageWrapper from '../components/PageWrapper';
 import SolarCalculator from '../components/SolarCalculator';
@@ -30,7 +31,7 @@ const CalculatorPage: React.FC = () => {
       {estimate && (
         <AnimatedSection className="mt-8 text-center">
           <a 
-            href="#contact" 
+            href="/contact" 
             className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 focus-visible:ring-green-500"
           >
             Get a Free Quote
