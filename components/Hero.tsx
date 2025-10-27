@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
         aria-label="Rooftop solar panels on a modern house in Nagpur"
       >
         <ImageWithSpinner
-          src="/assets/home/hero-background.jpg"
+          src="/images/hero-background.jpg"
           alt="Background image of rooftop solar panels"
         />
       </div>
