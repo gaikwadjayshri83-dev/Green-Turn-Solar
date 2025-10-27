@@ -53,6 +53,28 @@ const SkeletonLoader: React.FC = () => {
   );
 };
 
+// --- Static Fallback Data ---
+const staticReviewsData = [
+    {
+        author_name: "A. Sharma",
+        rating: 5,
+        text: "Green Turn Solar made the entire process seamless. Our electricity bill has dropped by 90%! The team was professional and knowledgeable. Highly recommended for anyone in Nagpur.",
+        profile_photo_url: '' // No image for static data
+    },
+    {
+        author_name: "R. Patel",
+        rating: 5,
+        text: "I was impressed with their technical expertise. They designed the perfect system for our commercial establishment. The investment is already paying for itself. Fantastic service!",
+        profile_photo_url: ''
+    },
+    {
+        author_name: "S. Deshpande",
+        rating: 5,
+        text: "From the initial consultation to the final installation, everything was handled perfectly. The team answered all my questions patiently. I'm proud to be generating my own clean energy.",
+        profile_photo_url: ''
+    }
+];
+
 // --- Type Definitions ---
 interface Review {
     author_name: string;
