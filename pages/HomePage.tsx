@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Hero from '../components/Hero';
 import AboutUs from '../components/AboutUs';
@@ -19,7 +20,7 @@ const HomePage: React.FC = () => {
         <p className="text-gray-600 mb-8 max-w-3xl mx-auto px-4">
             Use our AI-powered calculator to get an instant estimate of how much you can save with a rooftop solar system in Nagpur.
         </p>
-        <a href="#calculator" className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block">
+        <a href="/calculator" className="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-transform duration-300 hover:scale-105 inline-block">
             Launch Calculator
         </a>
       </AnimatedSection>
@@ -33,4 +34,3 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-
